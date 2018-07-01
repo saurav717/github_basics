@@ -1,0 +1,429 @@
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+https://www.youtube.com/watch?v=3RjQznt-8kE&list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+          To login from terminal
+
+git config --global user.name " (my username) "  
+/// mine is batpin1234
+
+
+git config --global user.email " (my email)  "       // global because we are setting it in a global capacity
+
+	
+////////////////////////////////////////////////////////////
+
+         To make a directory in our computer
+ 
+// you can do it in any required folder 
+
+mkdir (some name)
+
+////////////////////////////////////////////////////////////
+
+         To initialise git in our directory
+
+// initialises empty git repository in the folder you are exploring
+
+git init	
+
+///////////////////////////////////////////////////////////
+ 
+         To add something to workspace 
+
+git add (file name)
+
+///////////////////////////////////////////////////////////
+
+         To add everything in our local repository to the staging area
+
+git add .
+
+// having a staging area is just an extra layer of security 
+// instead of committing the whole repository we just need to commit some files, commit should be done logically
+// also helps us in splitting our workby committing at different points 
+
+///////////////////////////////////////////////////////////
+
+          To remove something from the staging area
+
+git rm --cached <file name>
+
+
+///////////////////////////////////////////////////////////
+
+           To delete something from our local repository
+
+git rm <file name>
+
+//dont do this unless and until necessary
+// will be confused with command for removing a file in staging area
+
+///////////////////////////////////////////////////////////
+
+         To commit 
+// we have to commit the file to save the changes in git
+// commits are like 'save files' we can have multiple saves 
+// if we comit a modified file it wont commit, we first have to add it to staging area waiting to be committed	
+
+git commit -m "(some comment)" 
+
+// better to have a descriptive commit message
+// after each commit we will get a unique ID of that commit and the branch on which the snapshot is saved
+
+//////////////////////////////////////////////////////////
+
+    To check the status of the files in your local repository
+
+git status
+
+// it displays all the files that are in the modified area and which are in the staging area and which needs to be committed
+// after modifying the files, they will be coloured based on which stage they are in
+// if RED - the file is just modified and not staged
+// if GREEN - the file is in the staging area ready to be committed 
+
+
+             ////////////////////////////
+    The files will be in three conditions 
+ 1) modified one - you just modified the orignial file (not committed)
+ 2) staging - if we want to commit a file we can add it to the staging area
+ 3) committed - 
+
+ 
+//////////////////////////////////////////////////////////
+
+        To check our commit history
+
+git log
+
+// it will show all the commits we have made with its complete unique ID and the message we put during each commit
+
+///////////////////////////////////////////////////////////
+
+         To check condensed version of commit logs
+
+git log --oneline
+
+// it displays the git commit history with the small version of the commit's unique ID and the message we put for each commit
+
+
+///////////////////////////////////////////////////////////
+
+          To revert the files to previous commits
+
+// this is done in three ways
+// checkout commit - entirely safe, you can just view the changes and not edit those
+// revert commit - 
+// reset commit - it permanently takes the file back in time and changes the commit. This is dangerous
+//                it takes the file back to some previous commit and deleted all the commits after that commit
+
+                  ///////////////////////
+
+// for checkout of files
+
+git checkout <unique ID of a particular commit>
+
+// what this does is make an alternate commit branch making the particular commit you chose as HEAD of that particular branch
+// it is detached from its master branch
+//the commit history wont be changed
+
+// to get back to master branch
+
+git checkout master
+
+
+                  ////////////////////////
+
+// for reverting the files
+// its like a particular commit never existed 
+// it basically undoes one particular commit
+// you use this if you want to remove a particular commit from all the commits 
+// it basically doesnt delete that commit, but instead creates a new commit in which the changes in that particular commit are not included
+
+git revert <unique ID of the particular branch>
+
+// what this does is it undoes whatever the changes that have been done in the particular commit you chose creating a new commit with those changes undone
+
+                 /////////////////////////
+
+// for resetting the files
+
+git reset <unique ID of the particular commit>
+
+// this deletes all the commits that are after the particular commit you chose
+// all the files will still be with you but they are now not committed
+// only the commits are deleted
+// if you change your mind you can still commit as you have the files with you
+// the content in the files is not altered or changed
+
+                ///////////////////////////
+
+// for hard resetting the files
+
+git reset <unique ID of the commit> --hard
+
+// in this, all the commits that are made after that particular commit are deleted
+// all the files are also reverted back to how they were at the time you made that particular commit
+//
+
+
+///////////////////////////////////////////////////////////
+
+             Branching
+
+// generally what we do is we just work on the main branch of commits 
+// if we are going to try something new on our main code, we can just create a side branch and work on our code in that side branch
+// if we like the changes that we make in that side branch we can merge that side branch with the main branch 
+// or else we can delete that side branch
+// if two or more developers are working on a particualr project, better to assign them on two seperate side branches to work on so it would not mess with the main code 
+
+          /////////////////////////
+
+     To create a new branch
+
+git branch <branch name>
+
+
+         //////////////////////////
+
+     To see all the branches to the master branch
+
+git branch -a
+
+        ///////////////////////////
+
+     To work on a new branch
+ 
+git checkout <branch name>
+ 
+
+       ////////////////////////////
+
+     To create a seperate branch and work on it simultaneously
+
+git checkout -b <branch name>
+         
+       ////////////////////////////
+
+      To delete a branch
+
+// do this only when the things go wrong or not as expected in the branch
+
+git branch -D <branch name>   // we use this when a branch is not merged with the master branch
+
+git branch -d <branch name>   // we use this when a branch is merged with the master branch
+
+      //////////////////////////////
+
+       To merge a branch with the master branch
+
+// operate on master branch
+// then do this command
+
+git merge <branch name>
+
+// before giving that command check if you have committed the changes in the particular branch
+// sometimes merge conflict occurs
+
+// merge conflict occurs when two or more different changes are made on the same file.
+// in that situation we first need to clear the conflict and then merge the paths
+// it cannot know what changes to incorporate 
+
+// suppose you made a branch at some point on the commit timeline of the master branch
+// now you have made changes or commits on the branch and did nothing on the master branch since forming this new branch
+// now when you merge this side branch with the master branch, the contents will just get fast forwarded
+// if you made any changes on the master branch, you may get conflicts
+
+           /////////////////////////////
+
+            conflicts 
+
+// suppose we have a file
+// we made a change in master branch to that file
+// we made another change to that file in some other branch
+// we committed those changes in both master branch and the other side branch
+// now we try to merge the file to the master branch
+// we get a conflict
+
+// when you try to merge it will ask you to resolve the conflict before merging
+// now in the file of conflict
+// it will display the changes you made and the changes some other person made for you to resolve and the particular branch in which the change is made
+
+// you need to resolve the merge conflict to shift to another branch, it will ask you to commit the file which is modified automatically containing all the changes made in both the branches
+// it will display same text in both the branches to resolve the conflict automatically
+// you can just commit the file without any message here because the message will be there on the editing screen       
+
+///////////////////////////////////////////////////////////
+
+         To link our directory to our github directory
+
+git remote add origin (link of the repository)
+// it will link our github directory to our local directory
+
+///////////////////////////////////////////////////////////
+
+         To check which username you are working in right now
+
+git config user.name
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+        Creating a new remote repository on github (two ways)
+
+// the first case is that we already have a project on our computer, and we want to collaborate with the world and we decide to upload it on github, we have a local repository already	
+// the second case is we dont have a local repo and we did not start the project yet, here we create a repo on github, clone it on our computer and work on it
+
+                 ////////////////////////////////
+// first case
+
+
+// we already have a project set up on our local machine
+// we want to push it to a new repository on github
+// create a repository on github , public or private
+// you can have a readme file describing the repository
+// after creating the repository you will have a URL for the repository
+// that is the URL for our git repository online
+// not we want to push all our project in our local repository to the remote repository online
+// before pushing check if there are any changes need to be committed
+
+               ///////////////////////////////////
+
+          To push into the git repository online
+
+git push <URL to git repo> <branch you want to push>
+
+// after that it will take some time, ask username and password, and then push everything to the git repo online
+// it will say that we got a new branch 'master' pushed to the 'master' branch in our repo online
+// the online repo is called remote repository
+// instead of typing the whole URL while pushing, you can give an alias to the link
+
+             ///////////////////////////////////
+
+           Giving an alias to the URL
+
+git remote add <alias name of URL> <URL of remote repo>
+
+// now if you made any changes to your files and committed, you can easily push them to the remote repository by the command 
+
+git push <alias name of URL>  <branch you want to push>
+
+// just refresh the github page and you will see the changes updated on the remote repository
+
+
+              ///////////////////////////////////
+
+
+//second case
+
+// we have a project in our git hub repository 
+// we dont have it on our computer or local repository
+// now we have to clone that repository to our computer and start working on it
+
+               //////////////////////////////////
+
+          To clone the git remote repository to our local repository or computer
+
+git clone <URL of the git remote repository>
+
+// now after making changes in a file and while pushing it to the remote repo, we think of putting an alias to the URL
+// in the first case when we created a remote repo and pushing it we put up an alias name for the URL
+// but it is not the case here since we cloned the repo from a URL. Hence it already has a set alias
+// we can tell that by using the following command
+
+git remote -v
+
+// it will show you the alias to use while pushing or fetching
+
+
+ 	  	//////////////////////////////////
+
+           To pull files from the remote repository
+
+// now we have just cloned the remote repository to our computer
+// we need to collaborate with people on our project
+
+// first we need to pull the files from the remote repository to our local repository just in case other developers made any changes, and to keep our files locally up to date
+// to do that we operate on the master branch because that is the branch we want to merge it to using the command
+
+git pull <URL of the repo or and alias> <branch you are going to pull from the remote repo>
+
+// it fetches all of the code from the remote and merges it with our master branch
+// if no one made any changes, it will show that everything is up to date
+
+// if you are working on a project and you made a new code file which you want to merge it to master branch in remote repo
+// you need the permission from others in order to merge it or not
+// better to push it as a seperate branch and not merge it with the master branch
+
+// you can merge it with the master branch in you local repo and push it to remote repo
+// but it will overwrite the master branch in the remote repo
+
+                //////////////////////////////////
+
+// just after you push a new branch and if you want to merge it with the master branch
+// you will have an option on your github account to "compare and pull request"
+// it then compares the new changes with the master branch, and gives a request to merge it with the master branch
+// then it will have the commit message and you can add some other message
+// after you press "create pull request", a notification or ping will be sent to the developers to review the changes and to merge it with the master branch in that repository
+
+// if there is no conflict between this branch and the master branch in the remote repo, you can directly merge them
+
+// it will show the deleted line in red and newly added line in green
+
+// whenever you want to merge a new branch with master branch in the remote repo 
+// you need to pull the remote master branch just in case if somebody made any changes
+// to do that use the command after checking out to the master branch
+
+git checkout master
+git pull origin master
+
+// what you can do is change or upload a side branch and merge it with the master branch in the git remote repo
+
+                 ///////////////////////////////////
+
+
+// you will get conflict if a change is made in the master branch in remote repo and that change is not made in local repo
+// so you will have to pull those changes and resolve the conflict to push anything to master branch
+// to resolve this conflict, the file of conflict will containg the contents updated by you and any other guy in the online repo
+// you can make final edits to that repo and you can push it to github remote repo
+
+// similarly you do for pushing other branches too
+
+////////////////////////////////////////////////////////
+
+               forking
+
+// say you want to work on some open source project but you dont have access to that repository 
+// what we wanted to do is download that repo to our computer, make some changes and push those changes to that repo
+// generally when you have a open source repo, you dont want to give access to master branch to all the people, so you limit the access
+// then what you do it you fork that repository
+// what is does is it copies the repository to your github account
+
+// after forking, you can clone or download that repo to our computer
+// after downloading, make the required changes to that repo
+
+// after making the changes in the forked repo in your git account, you actually want to contribute to the original repo 
+
+// then go to the main page of the forked repo in your account, and you will see a buttion "new pull request"
+// press it, and it will check if it can be merged with the master branch of the original repo
+
+// the owner will have to review the changes, and a request or notification will be sent to him
+// then he can press "create pull request" if he wants to merge them
+// if there are conflicts, resolve them
+// else add some comments and merge them
+
+// so, before getting merged, a notification will be send to the owner of the original repo
+// if its not like that, anyone can make changes and change the project
+
+// if someone wants to contribute to your project, you can see them in your pull requests
+// if you like the changes they made, you can add comments and merge with the master branch
+
+// this is how someone contributes to an open source projects
+
+
+
+
